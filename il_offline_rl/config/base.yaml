@@ -1,0 +1,57 @@
+
+
+discount: 0.99
+seed: 0
+cuda: True
+gpu_idx: 0
+log_dir: '/home/zy/zz/all_logs/rl-w-data/temp_temp_results'
+
+expert:
+  expert_algo: 'valuedice' # (e.g., valuedice, iq_lean, ppo)
+  total_expert_trajs: 40
+  num_trajs: 10 # number of expert trajectories used for learning
+  expert_file_path: '/home/zy/zz/all_logs/rl-w-data/expert_trajs'
+
+
+env:
+  env_name: ???
+  is_not_Atari: False
+  num_processes: 1 # num of parallel online interactive envs
+  max_episode_steps: ???
+
+eval:
+  eval_num_processes: 5 # num of parallel evaluation envs
+  eval_num_trajs: 10
+  eval_log_interval: 2000
+  deterministic_eval: True
+
+
+
+method:
+  method_name: ???
+  batch_size: 256
+  update_log_interval: 5000
+  max_timesteps: ???
+  start_training_steps: 1e3
+  absorbing: False
+  absorbing_per_episode: 0 # only useful when absorbing is True
+  norm_obs: False
+
+agent:
+  hidden_size: 256
+  is_mlp_base: ???
+  is_V_critic: ???
+  acti_fn: 'nn.ReLU()' # ['nn.ReLU()', 'nn.Tanh()', 'nn.ELU()']
+  policy_dist: 'TNorm' # ['TNorm', 'TNorm2', 'DNorm', 'Cat', 'Ber']
+  updates_per_step: 1
+
+hydra:
+  output_subdir: null
+
+defaults:
+#  - _self_  # only for hydra-core>=1.1 due to composition order changes (https://hydra.cc/docs/advanced/defaults_list/#composition-order)
+  - env: Hopper-v2
+  - method: ValueDICE
+
+
+

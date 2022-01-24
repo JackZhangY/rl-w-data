@@ -1,0 +1,23 @@
+# @package _global_
+
+
+
+method:
+  method_name: 'ValueDICE'
+  batch_size: 256
+  max_timesteps: 5e5
+  absorbing: True
+  absorbing_per_episode: 10
+  norm_obs: True
+
+agent:
+  hidden_size: 256
+  is_V_critic: False
+  is_mlp_base: ${env.is_not_Atari}
+  policy_dist: 'TNorm'
+
+  nu_lr: 1e-3
+  actor_lr: 1e-5
+  replay_regularization: 0.1
+  nu_regularization: 10.0
+  num_random_actions: 2e3

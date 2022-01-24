@@ -1,0 +1,10 @@
+# @package _global_
+
+env:
+  env_name: 'HalfCheetah-v2'
+  max_episode_steps: 1000
+  is_not_Atari: True
+
+
+eval:
+  deterministic_eval: True

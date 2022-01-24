@@ -13,7 +13,7 @@ This project aims to reproduce some currently popular **imitation learning** & *
 
 
 ### Implementation
-This project works with Python 3, and before starting the implementation, please check and install the necessary packages listed in  `./requirements.txt`:
+This project works with Python 3.7, and before starting the implementation, please check and install the necessary packages listed in  `./requirements.txt`:
 
 ```bash
 pip install -r requirements.txt

@@ -1,0 +1,27 @@
+# @package _global_
+
+
+
+method:
+  method_name: 'IQ_Learn'
+  batch_size: 256
+
+
+
+
+
+
+agent:
+  hidden_size: 256
+  policy_dist: 'TNorm'
+  is_V_critic: False
+  is_mlp_base: ${env.is_not_Atari}
+
+  is_double_Q: False
+  actor_lr: 3e-5
+  critic_lr: 3e-4
+  alpha_lr: 3e-4
+
+  critic_tau: 0.005
+  learnable_temperature: True
+  init_temperature: 0.01

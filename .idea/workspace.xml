@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="82ebc9ca-01da-4ec4-b74a-2b893a8bc266" name="Default Changelist" comment="" />
+    <list default="true" id="82ebc9ca-01da-4ec4-b74a-2b893a8bc266" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/generate_expert_trajs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plot_results.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_script.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/algo/base_algo.py" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/algo/base_algo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/algo/iq_learn.py" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/algo/iq_learn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/algo/value_dice.py" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/algo/value_dice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/config/base.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/config/base.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/envs.py" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/envs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/il_offline_rl/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/il_offline_rl/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_il_script.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run_il_script.sh" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,118 +26,186 @@
     <session id="-1903683731">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.27" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="TXT" value="2" />
+          <entry key="Hopper-v2" value="2" />
+          <entry key="TXT" value="3" />
           <entry key="csv" value="2" />
-          <entry key="md" value="3" />
-          <entry key="py" value="259" />
+          <entry key="ipynb" value="1" />
+          <entry key="log" value="3" />
+          <entry key="md" value="7" />
+          <entry key="py" value="344" />
           <entry key="pyi" value="10" />
-          <entry key="sh" value="9" />
-          <entry key="txt" value="2" />
+          <entry key="sh" value="11" />
+          <entry key="txt" value="5" />
+          <entry key="yaml" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Bash" value="9" />
-          <entry key="Markdown" value="3" />
-          <entry key="PLAIN_TEXT" value="6" />
-          <entry key="Python" value="259" />
+          <entry key="Bash" value="11" />
+          <entry key="IPNB" value="1" />
+          <entry key="Markdown" value="7" />
+          <entry key="PLAIN_TEXT" value="13" />
+          <entry key="Python" value="344" />
           <entry key="PythonStub" value="10" />
+          <entry key="YAML" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="6130" />
-          <entry key="md" value="297" />
-          <entry key="py" value="129913" />
-          <entry key="sh" value="2381" />
-          <entry key="txt" value="49" />
+          <entry key="Hopper-v2" value="101" />
+          <entry key="Python Console" value="6686" />
+          <entry key="md" value="309" />
+          <entry key="py" value="188734" />
+          <entry key="sh" value="4055" />
+          <entry key="txt" value="67" />
+          <entry key="yaml" value="3630" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Bash" value="2381" />
-          <entry key="Markdown" value="297" />
-          <entry key="PLAIN_TEXT" value="49" />
-          <entry key="Python" value="136043" />
+          <entry key="Bash" value="4055" />
+          <entry key="Markdown" value="309" />
+          <entry key="PLAIN_TEXT" value="67" />
+          <entry key="Python" value="195420" />
+          <entry key="YAML" value="3731" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run_il_script.sh">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/config/base.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/config/env/Ant-v2.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/iq_learn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+                <marker date="1641698176814" expanded="true" signature="193:197" ph="..." />
+                <marker date="1641698176814" expanded="true" signature="2555:2597" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="665">
+              <caret line="230" column="24" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+                <marker date="1642389613310" expanded="true" signature="3170:3296" ph="..." />
+                <marker date="1642389613310" expanded="true" signature="3632:4272" ph="..." />
+                <marker date="1642389613310" expanded="true" signature="5081:5706" ph="..." />
+                <marker date="1642389613310" expanded="true" signature="5729:6481" ph="..." />
+                <marker date="1642389613310" expanded="true" signature="7727:8828" ph="..." />
+                <marker date="1642389613310" expanded="true" signature="8828:8833" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/generate_expert_trajs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3489">
+              <caret line="206" lean-forward="true" selection-start-line="206" selection-end-line="206" />
+              <folding>
+                <element signature="e#55#67#0" expanded="true" />
+                <element signature="e#4738#4777#0" />
+                <element signature="e#5198#5226#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plot_results.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="437">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+              <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+        <entry file="file://$PROJECT_DIR$/run_script.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
-              <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-                <marker date="1640770040722" expanded="true" signature="311:312" ph="..." />
-                <marker date="1640770040722" expanded="true" signature="323:324" ph="..." />
-              </folding>
+            <state relative-caret-position="209">
+              <caret line="11" column="103" selection-start-line="11" selection-start-column="103" selection-end-line="11" selection-end-column="103" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/storage.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/base_algo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-                <marker date="1640744722889" expanded="true" signature="320:11073" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/hyperparameters.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" column="55" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
-              <folding>
-                <marker date="1640661317229" expanded="true" signature="59:64" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/base_algo.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="110">
+              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1640770232436" expanded="true" signature="132:137" ph="..." />
-                <marker date="1640770232436" expanded="true" signature="1470:1471" ph="..." />
-                <marker date="1640770232436" expanded="true" signature="1470:1476" ph="..." />
-                <marker date="1640770232436" expanded="true" signature="2714:2720" ph="..." />
+                <marker date="1641628549321" expanded="true" signature="183:188" ph="..." />
+                <marker date="1641628549321" expanded="true" signature="499:620" ph="..." />
+                <marker date="1641628549321" expanded="true" signature="1290:1291" ph="..." />
+                <marker date="1641628549321" expanded="true" signature="1290:1296" ph="..." />
+                <marker date="1641628549321" expanded="true" signature="2418:2423" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/il_offline_rl/envs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="341" selection-start-line="341" selection-end-line="341" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/enjoy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -134,6 +216,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Jupyter Notebook" />
         <option value="Python Script" />
       </list>
     </option>
@@ -148,14 +231,21 @@
       <find>np.zeros</find>
       <find>np.ones</find>
       <find>random</find>
+      <find>assert</find>
+      <find>StoreDict</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/utils</dir>
+      <dir>$PROJECT_DIR$/outputs</dir>
+      <dir>$PROJECT_DIR$/outputs/2022-01-03/16-46-56/None</dir>
       <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="76752ad0-3a8f-417e-86d3-1f807f45c4bb" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -164,37 +254,57 @@
         <option value="$PROJECT_DIR$/utils/utils.py" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/wrappers.py" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/arguments.py" />
-        <option value="$PROJECT_DIR$/run_script.sh" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/utils.py" />
-        <option value="$PROJECT_DIR$/generate_expert_trajs.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/__init__.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/hyperparameters.py" />
-        <option value="$PROJECT_DIR$/try.py" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/wrappers.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/value_dice.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/model.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/distributions.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/envs.py" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/storage.py" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/iq_learn.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/distributions.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/temp_model.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/env/Hopper-v2" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/env/Hopper-v2.yaml" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/method/ValueDICE.yaml" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/base.yaml" />
         <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/base_algo.py" />
-        <option value="$PROJECT_DIR$/a2c_ppo_acktr/envs.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/hyperparameters.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/value_dice.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/model.py" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/env/Walker2d-v2.yaml" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/env/HalfCheetah.yaml" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/config/env/Ant-v2.yaml" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/a2c_ppo_acktr/algo/__init__.py" />
+        <option value="$PROJECT_DIR$/plot_results.ipynb" />
+        <option value="$PROJECT_DIR$/plot_results.py" />
+        <option value="$PROJECT_DIR$/plots/utils.py" />
         <option value="$PROJECT_DIR$/run_il_script.sh" />
+        <option value="$PROJECT_DIR$/il_offline_rl/algo/base_algo.py" />
+        <option value="$PROJECT_DIR$/il_offline_rl/config/base.yaml" />
+        <option value="$PROJECT_DIR$/il_offline_rl/algo/value_dice.py" />
+        <option value="$PROJECT_DIR$/il_offline_rl/config/method/IQ_Learn.yaml" />
+        <option value="$PROJECT_DIR$/il_offline_rl/algo/iq_learn.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/try.py" />
+        <option value="$PROJECT_DIR$/il_offline_rl/envs.py" />
+        <option value="$PROJECT_DIR$/il_offline_rl/model.py" />
+        <option value="$PROJECT_DIR$/generate_expert_trajs.py" />
+        <option value="$PROJECT_DIR$/run_script.sh" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1920" />
-    <option name="y" value="-2" />
-    <option name="width" value="1200" />
-    <option name="height" value="1922" />
+    <option name="x" value="1" />
+    <option name="y" value="15" />
+    <option name="width" value="1919" />
+    <option name="height" value="1185" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -205,19 +315,23 @@
             <path>
               <item name="rl-w-data" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl-w-data" type="462c0819:PsiDirectoryNode" />
-              <item name="a2c_ppo_acktr" type="462c0819:PsiDirectoryNode" />
+              <item name="il_offline_rl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rl-w-data" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl-w-data" type="462c0819:PsiDirectoryNode" />
-              <item name="a2c_ppo_acktr" type="462c0819:PsiDirectoryNode" />
+              <item name="il_offline_rl" type="462c0819:PsiDirectoryNode" />
               <item name="algo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rl-w-data" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl-w-data" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -236,7 +350,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.try">
+  <component name="RunManager" selected="Python.generate_expert_trajs">
     <configuration name="arguments" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="rl-w-data" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -300,6 +414,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="plot_results" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="rl-w-data" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plot_results.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="try" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="rl-w-data" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -321,46 +456,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="rl-w-data" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/utils.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.generate_expert_trajs" />
-      <item itemvalue="Python.utils" />
       <item itemvalue="Python.arguments" />
       <item itemvalue="Python.envs" />
       <item itemvalue="Python.try" />
+      <item itemvalue="Python.plot_results" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.try" />
         <item itemvalue="Python.generate_expert_trajs" />
+        <item itemvalue="Python.try" />
+        <item itemvalue="Python.plot_results" />
         <item itemvalue="Python.envs" />
         <item itemvalue="Python.arguments" />
-        <item itemvalue="Python.utils" />
       </list>
     </recent_temporary>
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -382,23 +496,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="-2" width="1200" height="1922" extended-state="6" />
-    <editor active="true" />
+    <frame x="67" y="25" width="1853" height="1175" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4920635" visible="true" weight="0.26338148" />
-      <window_info id="Structure" order="1" sideWeight="0.50793654" side_tool="true" weight="0.16992353" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4908108" visible="true" weight="0.1601093" />
+      <window_info id="Structure" order="1" sideWeight="0.5091892" side_tool="true" weight="0.12076503" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32979912" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49945354" weight="0.20864865" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.45621622" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49945354" weight="0.46602872" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32979912" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32972974" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49872556" visible="true" weight="0.29185268" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012744" side_tool="true" weight="0.36328125" />
-      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4989071" weight="0.32776934" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.4627027" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49872556" visible="true" weight="0.36076555" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012744" side_tool="true" weight="0.36324325" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4989071" weight="0.3339713" />
+      <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -423,391 +537,234 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/gail.py">
+    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/config/env/Hopper-v2" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/14-36-59/try.log" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/14-36-59/.hydra/hydra.yaml" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/14-36-59/.hydra/config.yaml" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/14-36-59/.hydra/overrides.yaml" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/16-41-39/try.log" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/16-42-19/try.log" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/16-42-19/hydra.yaml" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/16-46-56/None/hydra.yaml" />
+    <entry file="file://$PROJECT_DIR$/outputs/2022-01-03/16-46-56/None/config.yaml" />
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/temp_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="287" selection-start-line="287" selection-end-line="287" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/hydra/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/omegaconf/omegaconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="620" column="8" selection-start-line="620" selection-start-column="8" selection-end-line="620" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/env/Walker2d-v2.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/gym-0.19.0-py3.7.egg/gym/spaces/box.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/env/Hopper-v2.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+        <state relative-caret-position="57">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/ppo.py">
+    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/hyperparameters.py" />
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/env/HalfCheetah-v2.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="78" column="25" lean-forward="true" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
+        <state relative-caret-position="190">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/kfac.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/a2c_acktr.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/kfac.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        <state relative-caret-position="190">
+          <caret line="10" column="18" lean-forward="true" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/gym-0.19.0-py3.7.egg/gym/core.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="733">
-          <caret line="275" column="16" lean-forward="true" selection-start-line="275" selection-start-column="16" selection-end-line="275" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/numpy/lib/shape_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9272">
-          <caret line="501" column="16" selection-start-line="501" selection-start-column="16" selection-end-line="501" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="433" lean-forward="true" selection-start-line="433" selection-end-line="433" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/monitor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/running_mean_std.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/ntpath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tem_log/0.monitor.csv" />
-    <entry file="file://$PROJECT_DIR$/tem_log/1.monitor.csv" />
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="36" column="12" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/utils/data/dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="106" column="13" selection-start-line="106" selection-start-column="13" selection-end-line="106" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/utils/data/dataloader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="345" column="8" selection-start-line="345" selection-start-column="8" selection-end-line="345" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/vec_env/base_vec_env.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="208" column="30" lean-forward="true" selection-start-line="208" selection-start-column="30" selection-end-line="208" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/vec_env/vec_normalize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="187" column="42" lean-forward="true" selection-start-line="187" selection-start-column="42" selection-end-line="187" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/nn/init.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="434" column="26" lean-forward="true" selection-start-line="434" selection-start-column="26" selection-end-line="434" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/nn/modules/linear.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="78" column="8" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/nn/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="1287" column="29" lean-forward="true" selection-start-line="1287" selection-start-column="29" selection-end-line="1287" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/nn/modules/activation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/distributions/transforms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="612" lean-forward="true" selection-start-line="612" selection-end-line="612" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/distributions/normal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/distributions/transformed_distribution.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="106" column="12" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/_tensor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-266">
-          <caret line="250" column="80" selection-start-line="250" selection-start-column="80" selection-end-line="250" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MUJOCO_LOG.TXT">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-337347971/torch/_C/_TensorBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="1299" column="8" selection-start-line="1299" selection-start-column="8" selection-end-line="1299" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/vec_env/subproc_vec_env.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="31" column="56" lean-forward="true" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/vec_env/dummy_vec_env.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="42" column="13" lean-forward="true" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-337347971/numpy/random/mtrand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5285">
-          <caret line="7211" column="8" selection-start-line="7211" selection-start-column="8" selection-end-line="7211" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/utils/tensorboard/writer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="148" column="6" selection-start-line="148" selection-start-column="6" selection-end-line="148" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/nn/modules/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="782" column="8" selection-start-line="782" selection-start-column="8" selection-end-line="782" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/argparse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="789">
-          <caret line="1708" column="25" selection-start-line="1708" selection-start-column="25" selection-end-line="1708" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generate_expert_trajs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1596">
-          <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
-          <folding>
-            <element signature="e#55#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/try.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="185" column="28" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-            <marker date="1640678760752" expanded="true" signature="1865:1895" ph="..." />
-            <marker date="1640678760752" expanded="true" signature="3441:3494" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/_C/_VariableFunctions.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="1236" column="4" selection-start-line="1236" selection-start-column="4" selection-end-line="1236" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="285">
-            <caret line="15" column="107" selection-start-line="15" selection-start-column="107" selection-end-line="15" selection-end-column="107" />
-          </first_editor>
-          <second_editor />
+        <state relative-caret-position="57">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/hyperparameters.py">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="228">
+            <caret line="12" selection-start-line="12" selection-end-line="12" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/hydra/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/tensorboard/backend/event_processing/reservoir.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="95" column="22" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3322" column="4" selection-start-line="3322" selection-start-column="4" selection-end-line="3322" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plot_results.ipynb" />
+    <entry file="file://$PROJECT_DIR$/plots/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="60" column="11" lean-forward="true" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/copy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="819">
+          <caret line="141" column="10" lean-forward="true" selection-start-line="141" selection-start-column="10" selection-end-line="141" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_il_script.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="13" column="55" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
-          <folding>
-            <marker date="1640661317229" expanded="true" signature="59:64" ph="..." />
-          </folding>
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/utils.py">
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/torch/_tensor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1639834899499" expanded="true" signature="1870:1944" ph="..." />
-          </folding>
+        <state relative-caret-position="-198">
+          <caret line="250" column="81" selection-start-line="250" selection-start-column="81" selection-end-line="250" selection-end-column="81" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/model.py">
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/monitor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1539">
-          <caret line="177" column="43" selection-start-line="177" selection-start-column="43" selection-end-line="177" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="361">
+          <caret line="33" column="12" lean-forward="true" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/value_dice.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/distributions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2869">
-          <caret line="217" column="75" selection-start-line="217" selection-start-column="75" selection-end-line="217" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-            <marker date="1640701229879" expanded="true" signature="280:285" ph="..." />
-            <marker date="1640701229879" expanded="true" signature="779:1816" ph="..." />
-            <marker date="1640701229879" expanded="true" signature="2519:2524" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/distributions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1713">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="2698">
+          <caret line="150" column="6" selection-start-line="150" selection-start-column="6" selection-end-line="150" selection-end-column="6" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1640744722837" expanded="true" signature="1914:2810" ph="..." />
+            <marker date="1641307634180" expanded="true" signature="1540:1776" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_script.sh">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/algo/base_algo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="874">
+          <caret line="65" column="45" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1640770232436" expanded="true" signature="132:137" ph="..." />
-            <marker date="1640770232436" expanded="true" signature="1470:1471" ph="..." />
-            <marker date="1640770232436" expanded="true" signature="1470:1476" ph="..." />
-            <marker date="1640770232436" expanded="true" signature="2714:2720" ph="..." />
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1641307634848" expanded="true" signature="1870:1944" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/wrappers.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/method/ValueDICE.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1640695762804" expanded="true" signature="966:967" ph="..." />
-          </folding>
+        <state relative-caret-position="266">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/envs.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/value_dice.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-304">
-          <caret line="47" column="37" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
+        <state relative-caret-position="2755">
+          <caret line="151" column="18" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#49#0" expanded="true" />
+            <marker date="1641634244582" expanded="true" signature="266:271" ph="..." />
+            <marker date="1641634244582" expanded="true" signature="743:1833" ph="..." />
+            <marker date="1641634244582" expanded="true" signature="2562:2567" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="88" column="25" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
+        <state relative-caret-position="152">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1640770040722" expanded="true" signature="311:312" ph="..." />
-            <marker date="1640770040722" expanded="true" signature="323:324" ph="..." />
+            <marker date="1641522599133" expanded="true" signature="346:347" ph="..." />
+            <marker date="1641522599133" expanded="true" signature="435:436" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a2c_ppo_acktr/storage.py">
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/storage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        <state relative-caret-position="955">
+          <caret line="110" column="62" selection-start-line="110" selection-start-column="62" selection-end-line="110" selection-end-column="62" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1640744722889" expanded="true" signature="320:11073" ph="..." />
@@ -815,10 +772,139 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_il_script.sh">
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/vec_env/dummy_vec_env.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="50" column="78" lean-forward="true" selection-start-line="50" selection-start-column="78" selection-end-line="50" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/try.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+            <marker date="1642255991363" expanded="true" signature="1929:1946" ph="..." />
+            <marker date="1642255991363" expanded="true" signature="3478:4310" ph="..." />
+            <marker date="1642255991363" expanded="true" signature="3645:4310" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/il/lib/python3.7/site-packages/stable_baselines3-1.3.1a0-py3.7.egg/stable_baselines3/common/atari_wrappers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-79">
+          <caret line="121" column="8" selection-start-line="121" selection-start-column="8" selection-end-line="121" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/envs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="341" selection-start-line="341" selection-end-line="341" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/method/IQ_Learn.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="230" column="24" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1642389613310" expanded="true" signature="3170:3296" ph="..." />
+            <marker date="1642389613310" expanded="true" signature="3632:4272" ph="..." />
+            <marker date="1642389613310" expanded="true" signature="5081:5706" ph="..." />
+            <marker date="1642389613310" expanded="true" signature="5729:6481" ph="..." />
+            <marker date="1642389613310" expanded="true" signature="7727:8828" ph="..." />
+            <marker date="1642389613310" expanded="true" signature="8828:8833" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_script.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="103" selection-start-line="11" selection-start-column="103" selection-end-line="11" selection-end-column="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generate_expert_trajs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3489">
+          <caret line="206" lean-forward="true" selection-start-line="206" selection-end-line="206" />
+          <folding>
+            <element signature="e#55#67#0" expanded="true" />
+            <element signature="e#4738#4777#0" />
+            <element signature="e#5198#5226#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plot_results.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/enjoy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/env/Ant-v2.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/config/base.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/iq_learn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+            <marker date="1641698176814" expanded="true" signature="193:197" ph="..." />
+            <marker date="1641698176814" expanded="true" signature="2555:2597" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/il_offline_rl/algo/base_algo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1641628549321" expanded="true" signature="183:188" ph="..." />
+            <marker date="1641628549321" expanded="true" signature="499:620" ph="..." />
+            <marker date="1641628549321" expanded="true" signature="1290:1291" ph="..." />
+            <marker date="1641628549321" expanded="true" signature="1290:1296" ph="..." />
+            <marker date="1641628549321" expanded="true" signature="2418:2423" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
