@@ -58,7 +58,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, time=False, max_ep
 
         if str(env.__class__.__name__).find('TimeLimit') >= 0:
             assert max_episode_steps == env._max_episode_steps, 'mismatch of max_episode_steps in Mujoco'
-            print('max episode steps of current env:{}'.format(env._max_episode_steps))
+            # print('max episode steps of current env:{}'.format(env._max_episode_steps))
             env = TimeLimitMask(env)
 
         if log_dir is not None:

@@ -34,9 +34,16 @@ def main(args):
     set_random_seed(args.seed, using_cuda=True)
 
     # log dir of training result (.../rl-w-data/results/Hopper-v3/ValueDICE/xxx_xxx_seed=x)
+    spec_hp = None
+    if args.method.method_name == 'IQ_Learn':
+        spec_hp = 'loss_type={}_init_temp={}_target_net={}_double_q={}_ag_reg={}'.format(
+            args.method.loss_type, args.agent.init_temperature, int(args.method.use_target), int(args.agent.is_double_Q),
+            0 if not args.method.action_gap_reg[0] else args.method.action_gap_reg[1])
+
     log_dir = os.path.join(args.log_dir, args.env.env_name, args.method.method_name,
                            f'num_trajs={args.expert.num_trajs}_absorbing={int(args.method.absorbing)}_'
-                           f'norm_obs={int(args.method.norm_obs)}_expert_algo={args.expert.expert_algo}_seed={args.seed}')
+                           f'norm_obs={int(args.method.norm_obs)}_expert_algo={args.expert.expert_algo}_{spec_hp}_'
+                           f'seed={args.seed}')
 
     if not os.path.exists(log_dir):
         os.makedirs(log_dir, exist_ok=True)
