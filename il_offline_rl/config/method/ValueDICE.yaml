@@ -9,6 +9,7 @@ method:
   absorbing: True
   absorbing_per_episode: 10
   norm_obs: True
+  num_random_actions: 2e3
 
 agent:
   hidden_size: 256
@@ -20,4 +21,3 @@ agent:
   actor_lr: 1e-5
   replay_regularization: 0.1
   nu_regularization: 10.0
-  num_random_actions: 2e3

@@ -3,7 +3,7 @@
 # import sys
 import torch
 import random
-from il_offline_rl.model import Policy, Q_agent, AC_agent
+from il_offline_rl.model import Q_agent, AC_agent
 from il_offline_rl.arguments import get_args
 import argparse
 import glob
@@ -29,7 +29,7 @@ def main(seed):
     torch.set_num_threads(2)
 
     parser = argparse.ArgumentParser(description='arguments for sampling expert trajectories')
-    parser.add_argument("--env_name", type=str, default='SpaceInvadersNoFrameskip-v4', help='RL task, default (Ant-v3)')
+    parser.add_argument("--env_name", type=str, default='BreakoutNoFrameskip-v4', help='RL task, default (Ant-v3)')
     parser.add_argument("--expert_algo", type=str, default='dqn', help='till now, choices: ppo|dqn|a2c(bug)')
     parser.add_argument("--num_trajs", type=int, default=1, help='number of expert trajectories')
     parser.add_argument("--num_processes", type=int, default=4, help='number of parallel envs')
@@ -170,7 +170,7 @@ def main(seed):
                 ep_rewards.append(info['episode']['r'])
                 save = True
                 rtn_obs.append(info['stack_terminal_observation'].unsqueeze(dim=0).cpu().numpy().copy())
-                # note: no need to reset() when an episode is over, because the vec env has wrapped it when each step
+                # note: no need to reset() when an episode is over, because the vec env has wrapped it at each step
                 steps = 0
 
         if (len(ep_rewards) in list(range(1, args.num_trajs+1))) and save:
@@ -184,7 +184,7 @@ def main(seed):
             data_dict = {'states': rtn_obs_, 'actions': rtn_acs_}
 
             save_path = os.path.join(save_file_path, save_file_name.format(args.env_name, args.seed * args.num_trajs + len(ep_rewards)))
-            np.savez_compressed(save_path, **data_dict)
+            # np.savez_compressed(save_path, **data_dict)
 
             save = False
 

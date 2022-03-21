@@ -223,7 +223,7 @@ class Q_agent(nn.Module):
             return self.critic_params
 
     def act(self, inputs, deterministic=True):
-        """ invalid when is_V_critic """
+        """ note: invalid when is_V_critic """
 
         act_hidden = self.critic.critic_base(inputs)
         dist = self.critic.critic_output(act_hidden)
@@ -251,7 +251,7 @@ class AC_base(nn.Module):
         self.critic_input_dim = input_dim + acs_dim if self.is_mlp_base and not self.is_V_critic else input_dim
         self.shared_actor_base = False if is_mlp_base else True
         # override to init actor and critic
-        self.critic, self.actor = None, None
+        self.critic, self.actor, self.actor_base = None, None, None
 
     def load_expert_model(self, expert_params):
         pass
@@ -284,10 +284,11 @@ class AC_base(nn.Module):
 
     def act(self, inputs, deterministic=True):
         """ used for evaluation """
-        if self.shared_actor_base:
-            actor_hidden = self.critic.critic_base(inputs)
-        else:
-            actor_hidden = self.actor.actor_base(inputs)
+        # if self.shared_actor_base: actor_hidden = self.critic.critic_base(inputs)
+        # else:
+        #     actor_hidden = self.actor.actor_base(inputs)
+
+        actor_hidden = self.actor_base(inputs)
 
         dist = self.actor(actor_hidden)
         if deterministic:
@@ -299,10 +300,11 @@ class AC_base(nn.Module):
 
     def get_action(self, inputs):
         """ inputs to actor net"""
-        if self.shared_actor_base:
-            actor_hidden = self.critic.critic_base(inputs)
-        else:
-            actor_hidden = self.actor.actor_base(inputs)
+        # if self.shared_actor_base:
+        #     actor_hidden = self.critic.critic_base(inputs)
+        # else:
+        #     actor_hidden = self.actor.actor_base(inputs)
+        actor_hidden = self.actor_base(inputs)
 
         dist = self.actor(actor_hidden)
         actions = dist.rsample()
@@ -316,12 +318,23 @@ class AC_base(nn.Module):
 
         return value # return a tuple includes tensor
 
+    def get_V(self, inputs):
+        # V(s) = Q(s, \pi(s))
+        _, action, log_probs = self.get_action(inputs)
+        obs_act_tensor = torch.cat((inputs, action), dim=1)
+        current_Q = self.get_value(obs_act_tensor)[0]
+
+        return current_Q
+
+
+
 class AC_agent(AC_base):
     def __init__(
             self, input_dim, acs_dim, hidden_size, policy_dist, init_fn=None, acti_fn=nn.Tanh(), is_mlp_base=True,
             is_V_critic=False):
         """
-        AC agent only for mujoco, Atari(when sampling expert data using PPO)
+        AC agent only for mujoco, Atari(when sampling expert data using PPO), if being used in Atari tasks, note that the
+        usage of shared critic base.
 
         :param input_dim: obs dim when mlp (mujoco), or n_stack when cnn (Atari)
         :param acs_dim:
@@ -341,6 +354,7 @@ class AC_agent(AC_base):
         self.critic = Critic(self.critic_input_dim, self.is_mlp_base, hidden_size, init_fn, acti_fn)
         # shared_actor_base = False if self.is_mlp_base else True
         self.actor = Actor(acs_dim, policy_dist, hidden_size, acti_fn, input_dim, self.shared_actor_base)
+        self.actor_base = self.critic.critic_base if self.shared_actor_base else self.actor.actor_base
         self.add_params_property()
         self.set_agent_mode(training_mode=True)
 
@@ -379,13 +393,15 @@ class SAC_agent(AC_base):
         # init double critic and target
         _Critic= DoubleCritic if self.is_double_Q else Critic
         self.critic = _Critic(self.critic_input_dim, self.is_mlp_base, hidden_size, init_fn, acti_fn)
-        self.actor = Actor(acs_dim, policy_dist, hidden_size, acti_fn, input_dim, actor_base=None)
+        self.actor = Actor(acs_dim, policy_dist, hidden_size, acti_fn, input_dim, shared_actor_base=False)
+        self.actor_base = self.actor.actor_base # SAC agent only for mujoco tasks, so no shared critic base
         self.add_params_property()
         self.set_agent_mode(training_mode=True)
 
         # init target critic
-        self.target_critic = deepcopy(self.critic)
-        self.target_critic.train()
+        self.target_critic = _Critic(self.critic_input_dim, self.is_mlp_base, hidden_size, init_fn, acti_fn)
+        self.target_critic.load_state_dict(self.critic.state_dict())
+        self.target_critic.eval()
 
     def get_value(self, inputs, both=False):
         value = self.critic(inputs)
@@ -404,6 +420,7 @@ class SAC_agent(AC_base):
         return value # a tuple includes one or two tensor
 
     def get_V(self, inputs, alpha):
+        # V(s) = Q(s,\pi(s)) - \log\pi(s)
         _, action, log_probs = self.get_action(inputs)
         obs_act_tensor = torch.cat((inputs, action), dim=1)
         current_Q = self.get_value(obs_act_tensor)[0]
@@ -419,197 +436,202 @@ class SAC_agent(AC_base):
 
         return target_V
 
+    def soft_update(self, tau):
+        for param, target_param in zip(self.critic.parameters(), self.target_critic.parameters()):
+            target_param.data.copy_(tau * param.data + (1. - tau) * target_param.data)
+
+
 class Flatten(nn.Module):
     def forward(self, x):
         return x.contiguous().view(x.size(0), -1)
 
-class Policy(nn.Module):
-    def __init__(self, obs_shape, action_space, base=None, base_kwargs=None):
-        super(Policy, self).__init__()
-        if base_kwargs is None:
-            base_kwargs = {}
-        if base is None:
-            if len(obs_shape) == 3:
-                base = CNNBase
-            elif len(obs_shape) == 1:
-                base = MLPBase
-            else:
-                raise NotImplementedError
-
-        self.obs_shape = obs_shape
-        # note: whether the obs_shape is (w, d, c) or (c, w, d), make_vec_env has TranposeImage wrapper which return the
-        # obs_shape with (c, w, d)
-        self.base = base(self.obs_shape[0],  **base_kwargs)
-
-        # atari (AC/Value-based)
-        if action_space.__class__.__name__ == "Discrete":
-            num_outputs = action_space.n
-            self.dist = Categorical(self.base.output_size, num_outputs)
-        # mujoco (AC-based)
-        elif action_space.__class__.__name__ == "Box":
-            num_outputs = action_space.shape[0]
-            self.dist = DiagGaussian(self.base.output_size, num_outputs)
-        elif action_space.__class__.__name__ == "MultiBinary":
-            num_outputs = action_space.shape[0]
-            self.dist = Bernoulli(self.base.output_size, num_outputs)
-        else:
-            raise NotImplementedError
-
-    @property
-    def is_recurrent(self):
-        return self.base.is_recurrent
-
-    @property
-    def recurrent_hidden_state_size(self):
-        """Size of rnn_hx."""
-        return self.base.recurrent_hidden_state_size
-
-    def forward(self, inputs, rnn_hxs, masks):
-        raise NotImplementedError
-
-    def act(self, inputs, rnn_hxs=None, masks=None, deterministic=False):
-        value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks)
-        dist = self.dist(actor_features)
-
-        if deterministic:
-            action = dist.mode()
-        else:
-            action = dist.sample()
-
-        action_log_probs = dist.log_probs(action)
-        dist_entropy = dist.entropy().mean()
-
-        return value, action, action_log_probs, rnn_hxs
-
-    def get_value(self, inputs, rnn_hxs, masks):
-        value, _, _ = self.base(inputs, rnn_hxs, masks)
-        return value
-
-    def evaluate_actions(self, inputs, rnn_hxs, masks, action):
-        value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks)
-        dist = self.dist(actor_features)
-
-        action_log_probs = dist.log_probs(action)
-        dist_entropy = dist.entropy().mean()
-
-        return value, action_log_probs, dist_entropy, rnn_hxs
-
-    def load_expert_model(self, expert_params, expert_algo):
-        """
-
-        :param expert_params:  OrderedDict(trained params)
-        :return:
-        """
-        print('--- load expert model ---')
-        if expert_algo == 'dqn':
-            params_name_list = Q_CNNbaseList
-            self.copy_trained_params(params_name_list, expert_params)
-        elif expert_algo in ['a2c', 'ppo']:
-            if len(self.obs_shape)==3: # for Atari
-                params_name_list = AC_CNNbaseList
-                self.copy_trained_params(params_name_list, expert_params)
-            elif len(self.obs_shape)==1: # for mujoco
-                params_name_list = AC_MLPbaseList
-
-                expert_params['log_std'] = expert_params['log_std'].unsqueeze(dim=1)
-                self.copy_trained_params(params_name_list,expert_params)
-            else:
-                raise NotImplementedError
-        else:
-            raise ValueError('current net structure not support {} expert'.format(expert_algo))
-
-    def copy_trained_params(self, params_name_list, target_params):
-        expert_params_dict = OrderedDict()
-        for (source_k, target_k) in params_name_list:
-            expert_params_dict[source_k] = target_params[target_k]
-        self.load_state_dict(expert_params_dict)
-
-
-class NNBase(nn.Module):
-    def __init__(self, recurrent, recurrent_input_size, hidden_size):
-        super(NNBase, self).__init__()
-
-        self._hidden_size = hidden_size
-        self._recurrent = recurrent
-
-        if recurrent:
-            self.gru = nn.GRU(recurrent_input_size, hidden_size)
-            for name, param in self.gru.named_parameters():
-                if 'bias' in name:
-                    nn.init.constant_(param, 0)
-                elif 'weight' in name:
-                    nn.init.orthogonal_(param)
-
-    @property
-    def is_recurrent(self):
-        return self._recurrent
-
-    @property
-    def recurrent_hidden_state_size(self):
-        if self._recurrent:
-            return self._hidden_size
-        return 1
-
-    @property
-    def output_size(self):
-        return self._hidden_size
-
-    def _forward_gru(self, x, hxs, masks):
-        if x.size(0) == hxs.size(0):
-            x, hxs = self.gru(x.unsqueeze(0), (hxs * masks).unsqueeze(0))
-            x = x.squeeze(0)
-            hxs = hxs.squeeze(0)
-        else:
-            # x is a (T, N, -1) tensor that has been flatten to (T * N, -1)
-            N = hxs.size(0)
-            T = int(x.size(0) / N)
-
-            # unflatten
-            x = x.view(T, N, x.size(1))
-
-            # Same deal with masks
-            masks = masks.view(T, N)
-
-            # Let's figure out which steps in the sequence have a zero for any agent
-            # We will always assume t=0 has a zero in it as that makes the logic cleaner
-            has_zeros = ((masks[1:] == 0.0) \
-                            .any(dim=-1)
-                            .nonzero()
-                            .squeeze()
-                            .cpu())
-
-            # +1 to correct the masks[1:]
-            if has_zeros.dim() == 0:
-                # Deal with scalar
-                has_zeros = [has_zeros.item() + 1]
-            else:
-                has_zeros = (has_zeros + 1).numpy().tolist()
-
-            # add t=0 and t=T to the list
-            has_zeros = [0] + has_zeros + [T]
-
-            hxs = hxs.unsqueeze(0)
-            outputs = []
-            for i in range(len(has_zeros) - 1):
-                # We can now process steps that don't have any zeros in masks together!
-                # This is much faster
-                start_idx = has_zeros[i]
-                end_idx = has_zeros[i + 1]
-
-                rnn_scores, hxs = self.gru(
-                    x[start_idx:end_idx],
-                    hxs * masks[start_idx].view(1, -1, 1))
-
-                outputs.append(rnn_scores)
-
-            # assert len(outputs) == T
-            # x is a (T, N, -1) tensor
-            x = torch.cat(outputs, dim=0)
-            # flatten
-            x = x.view(T * N, -1)
-            hxs = hxs.squeeze(0)
-
-        return x, hxs
+# class Policy(nn.Module):
+#     def __init__(self, obs_shape, action_space, base=None, base_kwargs=None):
+#         super(Policy, self).__init__()
+#         if base_kwargs is None:
+#             base_kwargs = {}
+#         if base is None:
+#             if len(obs_shape) == 3:
+#                 base = CNNBase
+#             elif len(obs_shape) == 1:
+#                 base = MLPBase
+#             else:
+#                 raise NotImplementedError
+#
+#         self.obs_shape = obs_shape
+#         # note: whether the obs_shape is (w, d, c) or (c, w, d), make_vec_env has TranposeImage wrapper which return the
+#         # obs_shape with (c, w, d)
+#         self.base = base(self.obs_shape[0],  **base_kwargs)
+#
+#         # atari (AC/Value-based)
+#         if action_space.__class__.__name__ == "Discrete":
+#             num_outputs = action_space.n
+#             self.dist = Categorical(self.base.output_size, num_outputs)
+#         # mujoco (AC-based)
+#         elif action_space.__class__.__name__ == "Box":
+#             num_outputs = action_space.shape[0]
+#             self.dist = DiagGaussian(self.base.output_size, num_outputs)
+#         elif action_space.__class__.__name__ == "MultiBinary":
+#             num_outputs = action_space.shape[0]
+#             self.dist = Bernoulli(self.base.output_size, num_outputs)
+#         else:
+#             raise NotImplementedError
+#
+#     @property
+#     def is_recurrent(self):
+#         return self.base.is_recurrent
+#
+#     @property
+#     def recurrent_hidden_state_size(self):
+#         """Size of rnn_hx."""
+#         return self.base.recurrent_hidden_state_size
+#
+#     def forward(self, inputs, rnn_hxs, masks):
+#         raise NotImplementedError
+#
+#     def act(self, inputs, rnn_hxs=None, masks=None, deterministic=False):
+#         value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks)
+#         dist = self.dist(actor_features)
+#
+#         if deterministic:
+#             action = dist.mode()
+#         else:
+#             action = dist.sample()
+#
+#         action_log_probs = dist.log_probs(action)
+#         dist_entropy = dist.entropy().mean()
+#
+#         return value, action, action_log_probs, rnn_hxs
+#
+#     def get_value(self, inputs, rnn_hxs, masks):
+#         value, _, _ = self.base(inputs, rnn_hxs, masks)
+#         return value
+#
+#     def evaluate_actions(self, inputs, rnn_hxs, masks, action):
+#         value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks)
+#         dist = self.dist(actor_features)
+#
+#         action_log_probs = dist.log_probs(action)
+#         dist_entropy = dist.entropy().mean()
+#
+#         return value, action_log_probs, dist_entropy, rnn_hxs
+#
+#     def load_expert_model(self, expert_params, expert_algo):
+#         """
+#
+#         :param expert_params:  OrderedDict(trained params)
+#         :return:
+#         """
+#         print('--- load expert model ---')
+#         if expert_algo == 'dqn':
+#             params_name_list = Q_CNNbaseList
+#             self.copy_trained_params(params_name_list, expert_params)
+#         elif expert_algo in ['a2c', 'ppo']:
+#             if len(self.obs_shape)==3: # for Atari
+#                 params_name_list = AC_CNNbaseList
+#                 self.copy_trained_params(params_name_list, expert_params)
+#             elif len(self.obs_shape)==1: # for mujoco
+#                 params_name_list = AC_MLPbaseList
+#
+#                 expert_params['log_std'] = expert_params['log_std'].unsqueeze(dim=1)
+#                 self.copy_trained_params(params_name_list,expert_params)
+#             else:
+#                 raise NotImplementedError
+#         else:
+#             raise ValueError('current net structure not support {} expert'.format(expert_algo))
+#
+#     def copy_trained_params(self, params_name_list, target_params):
+#         expert_params_dict = OrderedDict()
+#         for (source_k, target_k) in params_name_list:
+#             expert_params_dict[source_k] = target_params[target_k]
+#         self.load_state_dict(expert_params_dict)
+#
+#
+# class NNBase(nn.Module):
+#     def __init__(self, recurrent, recurrent_input_size, hidden_size):
+#         super(NNBase, self).__init__()
+#
+#         self._hidden_size = hidden_size
+#         self._recurrent = recurrent
+#
+#         if recurrent:
+#             self.gru = nn.GRU(recurrent_input_size, hidden_size)
+#             for name, param in self.gru.named_parameters():
+#                 if 'bias' in name:
+#                     nn.init.constant_(param, 0)
+#                 elif 'weight' in name:
+#                     nn.init.orthogonal_(param)
+#
+#     @property
+#     def is_recurrent(self):
+#         return self._recurrent
+#
+#     @property
+#     def recurrent_hidden_state_size(self):
+#         if self._recurrent:
+#             return self._hidden_size
+#         return 1
+#
+#     @property
+#     def output_size(self):
+#         return self._hidden_size
+#
+#     def _forward_gru(self, x, hxs, masks):
+#         if x.size(0) == hxs.size(0):
+#             x, hxs = self.gru(x.unsqueeze(0), (hxs * masks).unsqueeze(0))
+#             x = x.squeeze(0)
+#             hxs = hxs.squeeze(0)
+#         else:
+#             # x is a (T, N, -1) tensor that has been flatten to (T * N, -1)
+#             N = hxs.size(0)
+#             T = int(x.size(0) / N)
+#
+#             # unflatten
+#             x = x.view(T, N, x.size(1))
+#
+#             # Same deal with masks
+#             masks = masks.view(T, N)
+#
+#             # Let's figure out which steps in the sequence have a zero for any agent
+#             # We will always assume t=0 has a zero in it as that makes the logic cleaner
+#             has_zeros = ((masks[1:] == 0.0) \
+#                             .any(dim=-1)
+#                             .nonzero()
+#                             .squeeze()
+#                             .cpu())
+#
+#             # +1 to correct the masks[1:]
+#             if has_zeros.dim() == 0:
+#                 # Deal with scalar
+#                 has_zeros = [has_zeros.item() + 1]
+#             else:
+#                 has_zeros = (has_zeros + 1).numpy().tolist()
+#
+#             # add t=0 and t=T to the list
+#             has_zeros = [0] + has_zeros + [T]
+#
+#             hxs = hxs.unsqueeze(0)
+#             outputs = []
+#             for i in range(len(has_zeros) - 1):
+#                 # We can now process steps that don't have any zeros in masks together!
+#                 # This is much faster
+#                 start_idx = has_zeros[i]
+#                 end_idx = has_zeros[i + 1]
+#
+#                 rnn_scores, hxs = self.gru(
+#                     x[start_idx:end_idx],
+#                     hxs * masks[start_idx].view(1, -1, 1))
+#
+#                 outputs.append(rnn_scores)
+#
+#             # assert len(outputs) == T
+#             # x is a (T, N, -1) tensor
+#             x = torch.cat(outputs, dim=0)
+#             # flatten
+#             x = x.view(T * N, -1)
+#             hxs = hxs.squeeze(0)
+#
+#         return x, hxs
 
 
 # all the net size matches with the model given by stable_baselines3 (dqn and ppo, a2c)

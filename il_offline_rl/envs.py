@@ -57,6 +57,8 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, time=False, max_ep
         env.seed(seed + rank)
 
         if str(env.__class__.__name__).find('TimeLimit') >= 0:
+            assert max_episode_steps == env._max_episode_steps, 'mismatch of max_episode_steps in Mujoco'
+            print('max episode steps of current env:{}'.format(env._max_episode_steps))
             env = TimeLimitMask(env)
 
         if log_dir is not None:
@@ -160,15 +162,17 @@ def make_vec_envs(env_name,
                 envs = VecNormalize(envs, norm_obs=normalize_obs, norm_reward=False)
                 # todo: key setting
                 if fixed_obs_rms is not None:
-                    envs.eval() # not dynamically update the obs_rms and ret_rms
+                    # envs.eval() # not dynamically update the obs_rms and ret_rms
                     envs.obs_rms.mean, envs.obs_rms.var = fixed_obs_rms# setting the fixed mean and var for obs_rms
             else:
                 # train env, return the normalized reward
                 envs = VecNormalize(envs, norm_obs=normalize_obs, gamma=gamma)
                 # todo: key setting
                 if fixed_obs_rms is not None:
-                    envs.eval()
+                    # envs.eval()
                     envs.obs_rms.mean, envs.obs_rms.var =  fixed_obs_rms
+
+            envs.eval() # not dynamically update the obs_rms and ret_rms
 
     envs = VecPyTorch(envs, device)
     if absorbing_state: # only for mujoco
@@ -253,8 +257,10 @@ class VecAbsorbingState(VecEnvWrapper):
 
     def get_absorbing_state(self):
         # observation_space still keep the original size
-        obs = torch.zeros([self.observation_space.shape[0],])
-        obs = torch.cat([obs, torch.tensor([1.])], dim=0).to(self.device)
+        obs = torch.zeros([self.observation_space.shape[0]+1,]).to(self.device)
+        obs[-1].copy_(torch.tensor(1.))
+        # obs = torch.zeros([self.observation_space.shape[0],])
+        # obs = torch.cat([obs, torch.tensor([1.])], dim=0).to(self.device)
         return obs
 
 # todo: normalize action wrapper
@@ -268,7 +274,7 @@ class VecPyTorch(VecEnvWrapper):
 
     def reset(self):
         obs = self.venv.reset()
-        obs = torch.from_numpy(obs).float().to(self.device)
+        obs = torch.from_numpy(obs).float().to(self.device) # .float() change np.float64 to torch.float32
         return obs
 
     def step_async(self, actions):

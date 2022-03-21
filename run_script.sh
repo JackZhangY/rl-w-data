@@ -1,13 +1,13 @@
 #!/bin/bash
 
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name PongNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name AsteroidsNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name BeamRiderNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name PongNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name AsteroidsNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name BeamRiderNoFrameskip-v4 --expert_algo ppo --deterministic
 ~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name BreakoutNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name EnduroNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name QbertNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name RoadRunnerNoFrameskip-v4 --expert_algo ppo --deterministic
-~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name SeaquestNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name EnduroNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name QbertNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name RoadRunnerNoFrameskip-v4 --expert_algo ppo --deterministic
+#~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name SeaquestNoFrameskip-v4 --expert_algo ppo --deterministic
 
 #~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name PongNoFrameskip-v4 --expert_algo dqn
 #~/anaconda3/envs/il/bin/python generate_expert_trajs.py --env_name AsteroidsNoFrameskip-v4 --expert_algo dqn

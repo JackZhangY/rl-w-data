@@ -1,7 +1,7 @@
 import os
 import torch
 from torch.utils.data.sampler import BatchSampler, SubsetRandomSampler
-import collections
+from collections import deque
 import random
 import numpy as np
 from torch.utils.data import DataLoader, TensorDataset
@@ -46,20 +46,22 @@ class ExpertStorage(object):
 
         return obs_acs_file_list
 
-    def load_trasition_dataset(self):
+    def load_trasition_dataset(self, infinite_bootstrap=False):
         """
                 !!!obs & acs file should be corresponded!!!
         :param obs_file_path: obs file list includes the file names of reading npy
         :param acs_file_path: acs file list includes the file names of reading npy
         :return:
         """
+        assert not (infinite_bootstrap and self.absorbing), 'infinite bootstrap and absorbing have similar effect!'
+
         obs_list, acs_list, next_obs_list, done_list = [], [], [], []
         for obs_acs_file in self.obs_acs_file_list:
             print('---- load obs and acs file:{} ----'.format(obs_acs_file))
             with open(os.path.join(self.expert_file_path, obs_acs_file), 'rb') as file:
                 data = np.load(file)
-                obs_arr = data['states']
-                acs_arr = data['actions']
+                obs_arr = data['states'] # (len, dim)
+                acs_arr = data['actions'] # (len, dim)
 
             assert obs_arr.shape[0] - 1 == acs_arr.shape[0], 'default one more terminal state should be stored in obs file'
 
@@ -68,15 +70,19 @@ class ExpertStorage(object):
             next_obs_list.append(obs_arr[1:].copy())
 
             done_arr = np.zeros([obs_arr.shape[0]-1, ], dtype=np.float32)
-            done_arr[-1] = 1.
+            if infinite_bootstrap:# in this case, if traj terminates due to timelimit, the last done should be set as 0.
+                if acs_arr.shape[0] < self.max_episode_length:
+                    done_arr[-1] = 1.
+            else:
+                done_arr[-1] = 1.
 
-            done_list.append(done_arr)
+            done_list.append(np.expand_dims(done_arr, axis=1))
 
         # (bs, dim)
         expert_obs = np.concatenate(obs_list, axis=0)
         expert_acs = np.concatenate(acs_list, axis=0)
         expert_next_obs = np.concatenate(next_obs_list, axis=0)
-        # (bs,)
+        # (bs, 1)
         expert_dones = np.concatenate(done_list, axis=0)
 
         assert expert_obs.shape[0] == expert_acs.shape[0] == expert_next_obs.shape[0] == expert_dones.shape[0], \
@@ -116,8 +122,9 @@ class ExpertStorage(object):
         expert_obs = torch.from_numpy(expert_obs).to(self.device)
         expert_acs = torch.from_numpy(expert_acs).to(self.device)
         expert_next_obs = torch.from_numpy(expert_next_obs).to(self.device)
+        expert_dones = torch.from_numpy(expert_dones).to(self.device)
 
-        expert_dataset = DataLoader(TensorDataset(expert_obs, expert_acs, expert_next_obs),
+        expert_dataset = DataLoader(TensorDataset(expert_obs, expert_acs, expert_next_obs, expert_dones),
                                     batch_size=self.batch_size, shuffle=True, drop_last=True)
 
         return expert_dataset
@@ -157,105 +164,176 @@ class ExpertStorage(object):
 
 
 class ReplayBuffer(object):
-    def __init__(self, capacity, obs_shape, action_space, device,
-                 recurrent_hidden_state_size=None, optional_elements=None):
+    def __init__(self, capacity, obs_shape, action_space, device):
         """
         todo: multiprocessing storage
         :param capacity: the max number of samples stored in the replay buffer
-        :param obs_shape:
-        :param action_space:
         :param device:
-        :param recurrent_hidden_state_size:
-        :param optional_elements: extra transition samples (besides 'obs', 'action')
-        should be stored in the replay buffer. format: {'reward':{'init_fn': torch.zeros/ones}, 'var_dim': 1/other int}
         """
 
-        # base data elements init (obs, action, recurrent_hidden_state(if necessary))
+        # self.capacity = capacity
+        # self.device = device
+        # self.total_num = 0
+        #
+        # self.obs = deque(maxlen=capacity + 1)
+        # self.obs.append(None) # for the substitution in add_batch()
+        # self.next_obs = deque(maxlen=capacity)
+        # self.acs = deque(maxlen=capacity)
+        # self.dones = deque(maxlen=capacity)
+
+
+        # self.capacity = capacity
+        # self.device = device
+        # self.obs = torch.zeros(capacity + 1, *obs_shape).to(device)
+        #
+        # self.action_shape = action_space.shape[0]
+        # self.actions = torch.zeros(capacity + 1, self.action_shape).to(self.device)
+        #
+        # self.offset = 0
+        # self.steps = 0
+
+
         self.capacity = capacity
         self.device = device
-
-        self.obs = torch.zeros(capacity + 1, *obs_shape).to(self.device)
-
-        if recurrent_hidden_state_size is not None:
-            self.recurrent_hidden_states = torch.zeros(capacity + 1, recurrent_hidden_state_size).to(self.device)
-
-        self.discrete_act_space = True if action_space.__class__.__name__ == 'Discrete' else False
-
-        if self.discrete_act_space:
-            self.action_shape = 1
-        else:
-            self.action_shape = action_space.shape[0]
-
-        self.actions = torch.zeros(capacity + 1, self.action_shape).to(self.device)
-        if self.discrete_act_space:
-            # prepared for using .gather()
-            self.actions = self.actions.long()
-
-        # optional data elements init, e.g., reward, mask, bad_mask, value_preds, action_log_probs...
-        if optional_elements is not None and isinstance(optional_elements, dict):
-            # standard format: {'reward':{'init_fn': torch.zeros/ones}, 'var_dim': 1/other int}
-            for k, v in optional_elements.items():
-                self.__setattr__(k, v['init_fn'](capacity + 1, v['var_dim']).to(self.device))
+        self.obs = torch.zeros(capacity + 1, *obs_shape).to(device)
+        self.action_shape = action_space.shape[0]
+        self.actions = torch.zeros(capacity + 1, self.action_shape).to(device)
+        self.dones = torch.zeros(capacity + 1,).to(device)
+        self.next_obs = [None] * (self.capacity+1)
 
         self.offset = 0
         self.steps = 0
 
 
-    def add_batch(self, obs_tensor, acs_tensor, next_obs_tensor, hidden_state_tensor=None, optional_elements_tensor=None):
-        """
 
+
+
+    def add_batch(self, obs_tensor, acs_tensor, next_obs_tensor, done, truncated_done):
+        """
+            note: adopt the inifite bootstrap trick in 'iq-learn', i.e. done is False when traj is over due to timelimit
         :param obs_tensor: shape: (dim,)
         :param acs_tensor: shape: (dim,)
-        :param next_obs_tensor:
-        :param hidden_state_tensor:
-        :param optional_element_tensor: format: {'reward': torch.tensor}
+        :param next_obs_tensor: (dim,)
+        :param done: False or True, real return by the env.step()
+        :param truncated_done: True (done must be True) or False
         :return:
         """
+
+        # # substitute the current obs
+        # self.obs[-1] = obs_tensor
+        #
+        # # append the next obs
+        # if done:
+        #     self.obs.append(None) # add for next substitution
+        #     self.next_obs.append(next_obs_tensor)
+        #     if truncated_done:
+        #         self.dones.append([0.])
+        #     else:
+        #         self.dones.append([1.])
+        # else:
+        #     self.obs.append(next_obs_tensor)
+        #     self.next_obs.append(None) # add an empty next obs
+        #     self.dones.append([0.])
+        #
+        # self.acs.append(acs_tensor)
+        #
+        # self.total_num = min(self.total_num+1, self.capacity)
+
+
+
+        # idx = self.steps % (self.capacity + 1)
+        # next_idx = (self.steps + 1) % (self.capacity + 1)
+        #
+        #
+        # self.obs[idx].copy_(obs_tensor)
+        # self.actions[idx].copy_(acs_tensor)
+        # self.obs[next_idx].copy_(next_obs_tensor)
+        #
+        #
+        # self.steps += 1
+        # if self.steps > self.capacity:
+        #     self.offset = (self.offset + 1 )%(self.capacity + 1)
+
+
 
         idx = self.steps % (self.capacity + 1)
         next_idx = (self.steps + 1) % (self.capacity + 1)
 
-
         self.obs[idx].copy_(obs_tensor)
-        self.actions[idx].copy_(acs_tensor.long() if self.discrete_act_space else acs_tensor)
-        self.obs[next_idx].copy_(next_obs_tensor)
-
-        # add  optional elements
-        if hasattr(self, 'recurrent_hidden_states') and hidden_state_tensor is not None:
-            self.recurrent_hidden_states[idx].copy_(hidden_state_tensor)
-
-        if optional_elements_tensor is not None:
-            for k, v in optional_elements_tensor.items():
-                self.__dict__[k][idx].copy_(v)
+        self.actions[idx].copy_(acs_tensor)
+        if done:
+            self.next_obs[idx] = next_obs_tensor
+            self.dones[idx] = 0. if truncated_done else 1.
+        else:
+            self.next_obs[idx] = None
+            self.obs[next_idx].copy_(next_obs_tensor)
+            self.dones[idx] = 0.
 
         self.steps += 1
         if self.steps > self.capacity:
-            self.offset = (self.offset+1) % (self.capacity + 1)
+            self.offset = (self.offset + 1) % (self.capacity + 1)
 
 
-    def sample(self, batch_size, optional_elements=None):
+    def sample(self, batch_size):
         """
-
         :param batch_size:
-        :param optional_elements: a list includes all the keys whose value (data) should be returned
         :return:
         """
 
+
+        # batch_idx = random.sample(list(range(0, self.total_num)), batch_size)
+        # batch_obs, batch_acs, batch_next_obs, batch_dones = [], [], [], []
+        # for idx in batch_idx:
+        #     batch_obs.append(self.obs[idx])
+        #     batch_acs.append(self.acs[idx])
+        #     batch_dones.append(self.dones[idx])
+        #
+        #     next_obs = self.next_obs[idx]
+        #     if next_obs is not None:
+        #         batch_next_obs.append(next_obs)
+        #     else:
+        #         batch_next_obs.append(self.obs[idx+1])
+        #
+        # batch_obs = torch.stack(batch_obs, dim=0).to(device=self.device) # (bs, dim)
+        # batch_acs = torch.stack(batch_acs, dim=0).to(device=self.device) # (bs, dim)
+        # batch_next_obs = torch.stack(batch_next_obs, dim=0).to(device=self.device)# (bs, dim)
+        # batch_dones = torch.tensor(batch_dones).to(device=self.device) # (bs, 1)
+
+
+        # base_idx = random.sample(list(range(0, min(self.capacity, self.steps))), batch_size)
+        # base_idx = np.array(base_idx)
+        # batch_idx = torch.tensor((base_idx + self.offset) % (self.capacity + 1)).to(self.device)
+        # batch_next_idx = torch.tensor((base_idx + self.offset + 1) % (self.capacity + 1)).to(self.device)
+        #
+        # batch_obs = torch.index_select(self.obs, dim=0, index=batch_idx)
+        # batch_acs = torch.index_select(self.actions, dim=0, index=batch_idx)
+        # batch_next_obs = torch.index_select(self.obs, dim=0, index=batch_next_idx)
+        # batch_dones = []
+
+
+
         base_idx = random.sample(list(range(0, min(self.capacity, self.steps))), batch_size)
         base_idx = np.array(base_idx)
-        batch_idx = torch.tensor((base_idx + self.offset) % (self.capacity + 1)).to(self.device)
-        batch_next_idx = torch.tensor((base_idx + self.offset + 1) % (self.capacity + 1)).to(self.device)
+
+        np_batch_idx = (base_idx + self.offset) % (self.capacity + 1)
+        np_batch_next_idx = (base_idx + self.offset + 1) % (self.capacity + 1)
+
+        batch_idx = torch.tensor(np_batch_idx).to(self.device)
+        batch_next_idx = torch.tensor(np_batch_next_idx).to(self.device)
+
 
         batch_obs = torch.index_select(self.obs, dim=0, index=batch_idx)
         batch_acs = torch.index_select(self.actions, dim=0, index=batch_idx)
         batch_next_obs = torch.index_select(self.obs, dim=0, index=batch_next_idx)
+        batch_dones = torch.index_select(self.dones, dim=0, index=batch_idx)
 
-        optional_batch = []
-        if optional_elements is not None:
-            for k in optional_elements:
-                optional_batch.append(torch.index_select(self.__dict__[k], dim=0, index=batch_idx))
+        for i, idx in enumerate(np_batch_idx):
+            next_obs = self.next_obs[idx]
+            if next_obs is not None:
+                batch_next_obs[i].copy_(next_obs)
 
-        return batch_obs, batch_acs, batch_next_obs, optional_batch
+        return batch_obs, batch_acs, batch_next_obs, batch_dones
+
 
     def compute_value(self):
         # todo: for RL algorithm which should compute the target value

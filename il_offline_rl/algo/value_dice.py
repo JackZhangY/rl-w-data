@@ -52,7 +52,7 @@ class ValueDICE(BaseAlgo):
         self.updates_per_step = args.agent.updates_per_step
         self.update_log_interval = args.method.update_log_interval
 
-        self.num_random_actions = args.agent.num_random_actions
+        self.num_random_actions = args.method.num_random_actions
         self.start_training_steps = args.method.start_training_steps
         self.max_episode_steps = args.env.max_episode_steps
         self.max_timesteps = args.method.max_timesteps
@@ -83,7 +83,7 @@ class ValueDICE(BaseAlgo):
                     train_episode_window.append(infos[0]['episode']['r'])
                 episode_timesteps[0] = 0
                 total_train_episodes += 1
-                if total_train_episodes % 5 == 0:
+                if total_train_episodes % 10 == 0:
                     self.add_scalar('returns/train', np.mean(train_episode_window), self.total_timesteps)
 
             if self.total_timesteps < self.num_random_actions:
@@ -100,7 +100,7 @@ class ValueDICE(BaseAlgo):
             if dones[0] and not truncated_dones[0] and self.absorbing:
                 # if done, next_obs will be the initial obs for the next episode
                 absorbing_obs = self.env.get_absorbing_state()# tensor: (dim,)
-                self.online_rb.add_batch(obs[0], act[0], absorbing_obs)
+                self.online_rb.add_batch(obs[0], act[0], absorbing_obs, dones[0], truncated_dones[0])
 
                 for i in range(self.absorbing_per_episode):
 
@@ -110,18 +110,21 @@ class ValueDICE(BaseAlgo):
                         random_act = torch.tensor(random_act).to(self.device)
                         next_absorbing_obs = self.env.get_absorbing_state()
 
-                        self.online_rb.add_batch(absorbing_obs, random_act, next_absorbing_obs)
+                        self.online_rb.add_batch(absorbing_obs, random_act, next_absorbing_obs, dones[0], truncated_dones[0])
             else:
                 if truncated_dones[0]:
                     real_next_obs = infos[0]['terminal_observation']
-                    real_next_obs = np.concatenate([real_next_obs, np.array([0.])], axis=0).astype(np.float32)
+                    if self.absorbing:
+                        real_next_obs = np.concatenate([real_next_obs, np.array([0.])], axis=0).astype(np.float32)
                     real_next_obs = torch.tensor(real_next_obs).to(self.device)
-                    self.online_rb.add_batch(obs[0], act[0], real_next_obs)
+                    self.online_rb.add_batch(obs[0], act[0], real_next_obs, dones[0], truncated_dones[0])
                 else:
-                    self.online_rb.add_batch(obs[0], act[0], next_obs[0])
+                    real_next_obs = next_obs[0]
+                    if dones[0]:
+                        real_next_obs = torch.tensor(infos[0]['terminal_observation']).float().to(self.device)
+                    self.online_rb.add_batch(obs[0], act[0], real_next_obs, dones[0], truncated_dones[0])
 
             ### end batch process if multiprocessing env
-
             episode_timesteps += 1 # np broadcast
             self.total_timesteps += 1 * self.env.num_envs
 
@@ -138,10 +141,10 @@ class ValueDICE(BaseAlgo):
 
         # sample expert batch
         try:
-            expert_obs, expert_act, expert_next_obs = self.iter_expert_dataset.__next__()
+            expert_obs, expert_act, expert_next_obs, _ = self.iter_expert_dataset.__next__()
         except:
             self.iter_expert_dataset = iter(self.expert_dataset)
-            expert_obs, expert_act, expert_next_obs = self.iter_expert_dataset.__next__()
+            expert_obs, expert_act, expert_next_obs, _ = self.iter_expert_dataset.__next__()
 
         expert_initial_obs = expert_obs
 
@@ -199,6 +202,7 @@ class ValueDICE(BaseAlgo):
         nu_loss = total_loss + nu_grad_penalty * self.nu_reg
         pi_loss = -total_loss + orth_reg
 
+        # update critic and actor with the same objective function
         self.critic_optimizer.zero_grad()
         self.actor_optimizer.zero_grad()
         nu_loss.backward(retain_graph=True, inputs=self.agent.get_critic_params())
@@ -212,8 +216,8 @@ class ValueDICE(BaseAlgo):
 
         if self.update_steps % self.update_log_interval == 0:
             # record nu(Q) value
-            self.add_scalar('value_est/expert_nu', torch.mean(expert_nu), self.update_steps)
-            self.add_scalar('value_est/rb_nu', torch.mean(rb_nu), self.update_steps)
+            self.add_scalar('value_est/expert_Q', torch.mean(expert_nu), self.update_steps)
+            self.add_scalar('value_est/rb_Q', torch.mean(rb_nu), self.update_steps)
             # record inverse Bellman operator
             self.add_scalar('inv_Bellman/expert_inv_Bellman', torch.mean(expert_inv_Bellman), self.update_steps)
             self.add_scalar('inv_Bellman/rb_inv_Bellman', torch.mean(rb_inv_Bellman), self.update_steps)
@@ -221,9 +225,14 @@ class ValueDICE(BaseAlgo):
             self.add_scalar('loss/total_loss', total_loss.item(), self.update_steps)
             self.add_scalar('loss/grad_penalty', nu_grad_penalty.item(), self.update_steps)
             self.add_scalar('loss/orth_reg', orth_reg.item(), self.update_steps)
+            # record action gap
+            expert_v = self.agent.get_V(expert_obs)
+            rb_v = self.agent.get_V(rb_obs)
+            self.add_scalar('action_gap/expert_ag', torch.mean(expert_nu- expert_v), self.update_steps)
+            self.add_scalar('action_gap/rb_ag', torch.mean(rb_nu - rb_v), self.update_steps)
 
 
-    def grad_penalty(self, expert_obs_act, rb_obs_act, expert_next_obs_act, rb_next_obs_act):
+    def grad_penalty(self, expert_obs_act, rb_obs_act, expert_next_obs_act, rb_next_obs_act, coff=1):
         alpha = torch.rand(expert_obs_act.size()[0], 1)
         alpha = alpha.expand_as(expert_obs_act).to(self.device)
 
@@ -243,7 +252,7 @@ class ValueDICE(BaseAlgo):
             only_inputs=True
         )[0] + EPS
 
-        grad_penalty = (gradient.norm(2, dim=1) - 1).pow(2).mean()
+        grad_penalty = coff * (gradient.norm(2, dim=1) - 1).pow(2).mean()
         return grad_penalty
 
 

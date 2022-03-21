@@ -60,8 +60,10 @@ class BaseAlgo(Logger):
             self.online_rb = online_replaybuffer
             # todo: multiprocess online envs
             assert env.num_envs == 1, 'online sampling not support multiprocess envs now'
-
             self.total_timesteps = 0
+            self.is_offline_rl = False
+        else:
+            self.is_offline_rl = True
 
         # to be overridden
         self.agent = None

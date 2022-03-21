@@ -4,7 +4,7 @@ discount: 0.99
 seed: 0
 cuda: True
 gpu_idx: 0
-log_dir: '/home/zy/zz/all_logs/rl-w-data/temp_temp_results'
+log_dir: '/home/zy/zz/all_logs/rl-w-data/b_temp_temp_results'
 
 expert:
   expert_algo: 'valuedice' # (e.g., valuedice, iq_lean, ppo)
@@ -15,7 +15,7 @@ expert:
 
 env:
   env_name: ???
-  is_not_Atari: False
+  is_not_Atari: False # used for 'is_V_critic', only Atari uses cnn_base
   num_processes: 1 # num of parallel online interactive envs
   max_episode_steps: ???
 
@@ -50,8 +50,8 @@ hydra:
 
 defaults:
 #  - _self_  # only for hydra-core>=1.1 due to composition order changes (https://hydra.cc/docs/advanced/defaults_list/#composition-order)
-  - env: Hopper-v2
   - method: ValueDICE
+  - env: Hopper-v2
 
 
 

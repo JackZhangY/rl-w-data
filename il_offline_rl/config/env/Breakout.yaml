@@ -1,0 +1,14 @@
+# @package _global_
+
+env:
+  env_name: 'BreakoutNoFrameskip-v4'
+  max_episode_steps: 10000
+  is_not_Atari: False
+
+
+eval:
+  deterministic_eval: True
+
+
+agent:
+  target_critic_update_freq: 1000 # used in IQ-Learn
